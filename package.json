@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "dist/main.js",
   "scripts": {
-    "dev": "tsc && node dist/main.js"
+    "game": "tsc && node dist/main.js"
   },
   "author": "Manuel Rivera",
   "license": "ISC",

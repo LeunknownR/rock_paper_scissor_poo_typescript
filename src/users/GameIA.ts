@@ -1,25 +1,20 @@
-import GameSelection from "../GameSelection";
-import { getRandomInteger } from "../utils/numbers";
+import { getRandomPositiveInteger } from "../utils/numbers";
 import GameScreen from "../utils/GameScreen";
+import GameSelection, { ALL_GAME_SELECTIONS, GAME_SELECTION_TRANSCRIPTIONS } from "./GameSelection";
 
 export default class GameIA {
-	private _victories: number;
+	private victories: number;
 	constructor() {
-		this._victories = 0;
+		this.victories = 0;
 	}
 	win(): void {
-		this._victories++;
-		GameScreen.display(">> +1 IA 🤖");
-	}
-	get victories(): number {
-		return this._victories;
+		this.victories++;
+		GameScreen.print(">> +1 IA 🤖");
 	}
 	play(): GameSelection {
-		const indexSelection = getRandomInteger(
-			GameSelection.ALL_SELECTIONS.length
-		);
-		const selection = GameSelection.ALL_SELECTIONS[indexSelection];
-		GameScreen.display("🤖 IA: " + selection);
-		return new GameSelection(selection);
+		const indexSelection = getRandomPositiveInteger(ALL_GAME_SELECTIONS.length);
+		const selection = ALL_GAME_SELECTIONS[indexSelection];
+		GameScreen.print("🤖 IA: " + GAME_SELECTION_TRANSCRIPTIONS[selection]);
+		return selection;
 	}
 }

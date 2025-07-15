@@ -1,24 +1,30 @@
-import GameSelection from "../GameSelection";
 import GameScreen from "../utils/GameScreen";
+import GameSelection, { ALL_GAME_SELECTIONS, GAME_SELECTION_TRANSCRIPTIONS } from "./GameSelection";
 
 export default class GamePlayer {
-	private _victories: number;
+	private victories: number;
 	constructor() {
-		this._victories = 0;
+		this.victories = 0;
 	}
 	win(): void {
-		this._victories++;
-		GameScreen.display(">> +1 Jugador 🥳");
+		this.victories++;
+		GameScreen.print(">> +1 Jugador 🥳");
 	}
-	get victories(): number {
-		return this._victories;
+	private getMenu(): string {
+		let menu = "Haz tu jugada ⚔️:\n";
+		menu += ALL_GAME_SELECTIONS.map(
+			selection =>
+				`${selection}) ${GAME_SELECTION_TRANSCRIPTIONS[selection]}`
+		).join("\n");
+		return menu;
 	}
 	play(): GameSelection {
 		while (true) {
-			const selection = GameScreen.read(`>> Haz tu jugada (${GameSelection.ALL_SELECTIONS.join(", ")}): `);
-			if (GameSelection.ALL_SELECTIONS.includes(selection.toUpperCase()))
-				return new GameSelection(selection);
-			GameScreen.display("x La selección es inválida 🤬 x");
+			const menu = this.getMenu();
+			const input = GameScreen.read(menu);
+			const selection = parseInt(input) as GameSelection;
+			if (ALL_GAME_SELECTIONS.includes(selection)) return selection;
+			GameScreen.print("x La selección es inválida 🤬 x");
 		}
 	}
 }

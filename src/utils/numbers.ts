@@ -1,3 +1,3 @@
-export function getRandomInteger(topLimit: number): number {
+export function getRandomPositiveInteger(topLimit: number): number {
 	return Math.floor(Math.random() * topLimit);
 }
