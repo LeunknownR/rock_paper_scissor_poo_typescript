@@ -15,7 +15,7 @@ export default class GameInputRoundQuantity {
 	}
 	private isValid(value: any): boolean {
 		if (!Number.isNaN(value) && value > 0) return true;
-		GameScreen.print(">> Al menos tienes que jugar 1 partida 🫤");
+		GameScreen.print(">> Al menos tienes que jugar 1 partida 🫤\n");
 		return false; 
 	}
 }

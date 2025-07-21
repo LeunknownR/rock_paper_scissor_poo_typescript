@@ -6,9 +6,10 @@ Crear un juego de piedra, papel o tijera, que dada una cantidad de partidas, se 
 import GameInputRoundQuantity from "./game-input/GameInputRoundQuantity";
 import GameIA from "./users/GameIA";
 import GamePlayer from "./users/GamePlayer";
-import GameSelectionEvaluator from "./users/GameSelectionEvaluator";
-import GameSelectionEvaluatorResult from "./users/GameSelectionEvaluatorResult";
 import GameScreen from "./utils/GameScreen";
+import GameRoundManager from "./GameRoundManager";
+import GameDrawManager from "./GameDrawManager";
+import GameStats from "./GameStats";
 
 export default class RockPaperScissorGame {
 	private showTitle(): void {
@@ -19,17 +20,28 @@ export default class RockPaperScissorGame {
 		const roundQuantity = new GameInputRoundQuantity();
 		const player = new GamePlayer();
 		const ia = new GameIA();
-		this.play(player, ia);
+		const drawManager = new GameDrawManager();
+		const gameRoundManager = new GameRoundManager(player, ia, drawManager);
+		const lastRound = this.play(roundQuantity, gameRoundManager);
+		new GameStats({
+			player,
+			ia,
+			drawManager,
+			lastRound,
+			totalRounds: roundQuantity.value,
+		}).show();
 	}
-	private play(player: GamePlayer, ia: GameIA): void {
-		const playerSelection = player.play();
-		const iaSelection = ia.play();
-		const result = GameSelectionEvaluator.check(playerSelection, iaSelection)
-		if (result === GameSelectionEvaluatorResult.Player) player.win();
-		else if (result === GameSelectionEvaluatorResult.IA) ia.win();
-		else this.showGameDraw();
-	}
-	private showGameDraw(): void {
-		GameScreen.print("¿Qué pasó aquí? ¡Fue un empate! 😱😱😱");
+	private play(
+		roundQuantity: GameInputRoundQuantity,
+		gameRoundManager: GameRoundManager
+	): number {
+		let round: number = 0;
+		while (round < roundQuantity.value) {
+			if (gameRoundManager.isThereADefinitiveResult(roundQuantity.value))
+				break;
+			round++;
+			gameRoundManager.playRound(round);
+		}
+		return round;
 	}
 }

@@ -1,5 +1,5 @@
 import GameSelection from "./GameSelection";
-import GameSelectionEvaluatorResult from "./GameSelectionEvaluatorResult";
+import GameSelectionEvaluatorResult from "../game-selection/GameSelectionEvaluatorResult";
 
 export default class GameSelectionEvaluator {
 	static check(

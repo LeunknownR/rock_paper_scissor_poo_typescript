@@ -1,13 +1,16 @@
 import GameScreen from "../utils/GameScreen";
-import GameSelection, { ALL_GAME_SELECTIONS, GAME_SELECTION_TRANSCRIPTIONS } from "./GameSelection";
+import GameSelection, { ALL_GAME_SELECTIONS, GAME_SELECTION_TRANSCRIPTIONS } from "../game-selection/GameSelection";
 
 export default class GamePlayer {
-	private victories: number;
+	private _victories: number;
 	constructor() {
-		this.victories = 0;
+		this._victories = 0;
+	}
+	get victories(): number {
+		return this._victories;
 	}
 	win(): void {
-		this.victories++;
+		this._victories++;
 		GameScreen.print(">> +1 Jugador 🥳");
 	}
 	private getMenu(): string {
@@ -24,7 +27,7 @@ export default class GamePlayer {
 			const input = GameScreen.read(menu);
 			const selection = parseInt(input) as GameSelection;
 			if (ALL_GAME_SELECTIONS.includes(selection)) return selection;
-			GameScreen.print("x La selección es inválida 🤬 x");
+			GameScreen.print("x La selección es inválida 🤬 x\n");
 		}
 	}
 }

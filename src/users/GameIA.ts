@@ -1,14 +1,17 @@
 import { getRandomPositiveInteger } from "../utils/numbers";
 import GameScreen from "../utils/GameScreen";
-import GameSelection, { ALL_GAME_SELECTIONS, GAME_SELECTION_TRANSCRIPTIONS } from "./GameSelection";
+import GameSelection, { ALL_GAME_SELECTIONS, GAME_SELECTION_TRANSCRIPTIONS } from "../game-selection/GameSelection";
 
 export default class GameIA {
-	private victories: number;
+	private _victories: number;
 	constructor() {
-		this.victories = 0;
+		this._victories = 0;
+	}
+	get victories(): number {
+		return this._victories;
 	}
 	win(): void {
-		this.victories++;
+		this._victories++;
 		GameScreen.print(">> +1 IA 🤖");
 	}
 	play(): GameSelection {
